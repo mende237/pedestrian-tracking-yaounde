@@ -180,7 +180,7 @@ Key hypotheses to test:
 
 - Alahi et al., *Social Force* (CVPR 2014)
 - Xu et al., *Social-Transmotion* (ICLR 2024) — VITA lab, EPFL
-- Nkurikiyeyezu et al., *Pedestrian safety in Yaounde* (Future Transportation, 2024)
+- Feudjio, S.L.T.; Tchaheu, D.T.; Fondzenyuy, S.K.; Jackai, I.N., II; Usami, D.S.; Persia, L. *Investigating and Improving Pedestrian Safety in an Urban Environment of a Low- or Middle-Income Country: A Case Study of Yaounde, Cameroon*. **Future Transportation, 2024**, 4, 548-578. DOI: [10.3390/futuretransp4020026](https://doi.org/10.3390/futuretransp4020026)
 
 ---
 
