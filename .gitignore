@@ -10,15 +10,19 @@ build/
 .venv/
 venv/
 env/
+
 # Jupyter
 .ipynb_checkpoints/
-# Data / large files (entire folder ignored - videos are too large for git)
+
+# Data (videos, CSVs, ETH/UCY files - too large for git)
 data/
-# Model weights (downloaded automatically)
-*.pt
-# Results (heavy generated files: videos, GIFs, heatmaps, PKL)
+
+# Results (generated outputs: videos, GIFs, heatmaps, PKL files)
 results/
+
+# Model weights (auto-downloaded by ultralytics)
+*.pt
+
 # OS
 .DS_Store
 Thumbs.db
-
