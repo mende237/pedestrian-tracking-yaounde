@@ -29,6 +29,15 @@ Pedestrian trajectory datasets from Low- and Middle-Income Countries (LMICs) are
 > Video was recorded handheld / from a fixed vantage point at the intersection.
 > The 30 FPS rate provides sub-33 ms temporal resolution — sufficient for fine-grained speed estimation.
 
+### Map
+
+**Coordinates:** 3°51'50.5"N  11°29'47.8"E (decimal: 3.864028, 11.496611)
+
+[![Carrefour Melen - OpenStreetMap](https://staticmap.openstreetmap.de/staticmap.php?center=3.864028,11.496611&zoom=16&size=640x360&markers=3.864028,11.496611,ltblue)](https://www.openstreetmap.org/?mlat=3.864028&mlon=11.496611&zoom=16)
+
+> Click the map to open interactively in OpenStreetMap. Also viewable on [Google Maps](https://maps.google.com/?q=3.864028,11.496611).
+
+
 ---
 
 ## Results
