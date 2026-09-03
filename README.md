@@ -24,7 +24,8 @@ Pedestrian trajectory datasets from Low- and Middle-Income Countries (LMICs) are
 | **Camera** | Samsung Galaxy A56 |
 | **Resolution** | Full HD — 1920 × 1080 px |
 | **Frame rate** | 30 FPS |
-| **Files** | `data/Record_1.mp4`, `data/Record_2.mp4` |
+| **Files** | `data/Record_1.mp4` (10m01s, 1277 MB), `data/Record_2.mp4` (5m00s, 639 MB) |
+| **Total footage** | ~15 minutes |
 
 > Video was recorded handheld / from a fixed vantage point at the intersection.
 > The 30 FPS rate provides sub-33 ms temporal resolution — sufficient for fine-grained speed estimation.
