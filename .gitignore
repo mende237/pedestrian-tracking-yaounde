@@ -1,4 +1,4 @@
-﻿# Python
+# Python
 __pycache__/
 *.py[cod]
 *.egg-info/
@@ -19,6 +19,11 @@ data/
 
 # Model weights (downloaded automatically)
 *.pt
+
+# Results (heavy generated files: videos, GIFs, heatmaps, PKL)
+results/
+# Results (heavy generated files: videos, GIFs, heatmaps, PKL)
+results/
 
 # OS
 .DS_Store
