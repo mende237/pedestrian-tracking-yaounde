@@ -1,1 +1,28 @@
-data/
+﻿# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data / large files
+data/yaounde_video.*
+data/eth_ucy/
+results/raw_results.pkl
+results/tracking_run/
+
+# Model weights (downloaded automatically)
+*.pt
+
+# OS
+.DS_Store
+Thumbs.db
