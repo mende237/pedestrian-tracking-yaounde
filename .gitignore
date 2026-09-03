@@ -14,11 +14,8 @@ env/
 # Jupyter
 .ipynb_checkpoints/
 
-# Data / large files
-data/yaounde_video.*
-data/eth_ucy/
-results/raw_results.pkl
-results/tracking_run/
+# Data / large files (entire folder ignored - videos are too large for git)
+data/
 
 # Model weights (downloaded automatically)
 *.pt
@@ -26,3 +23,4 @@ results/tracking_run/
 # OS
 .DS_Store
 Thumbs.db
+
