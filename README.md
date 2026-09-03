@@ -178,8 +178,8 @@ Key hypotheses to test:
 
 ## Related Work
 
-- Alahi et al., *Social Force* (CVPR 2014)
-- Xu et al., *Social-Transmotion* (ICLR 2024) — VITA lab, EPFL
+- Alahi, A.; Goel, K.; Ramanathan, V.; Robicquet, A.; Fei-Fei, L.; Savarese, S. *Social LSTM: Human Trajectory Prediction in Crowded Spaces*. **CVPR 2016**. [CVF](https://openaccess.thecvf.com/content_cvpr_2016/papers/Alahi_Social_LSTM_Human_CVPR_2016_paper.pdf)
+- Saadatnejad, S.; Gao, Y.; Messaoud, K.; Alahi, A. *Social-Transmotion: Promptable Human Trajectory Prediction*. **ICLR 2024** — VITA lab, EPFL. [arXiv](https://arxiv.org/abs/2312.16168) | [Code](https://github.com/vita-epfl/social-transmotion)
 - Feudjio, S.L.T.; Tchaheu, D.T.; Fondzenyuy, S.K.; Jackai, I.N., II; Usami, D.S.; Persia, L. *Investigating and Improving Pedestrian Safety in an Urban Environment of a Low- or Middle-Income Country: A Case Study of Yaounde, Cameroon*. **Future Transportation, 2024**, 4, 548-578. DOI: [10.3390/futuretransp4020026](https://doi.org/10.3390/futuretransp4020026)
 
 ---
