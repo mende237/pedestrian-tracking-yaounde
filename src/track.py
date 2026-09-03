@@ -1,11 +1,14 @@
 ﻿"""
 track.py - Pedestrian Detection & Tracking
 Uses YOLOv8n with ByteTrack to detect and track pedestrians in a video.
-Saves an annotated output video and raw tracking results for trajectory extraction.
+
+Memory-efficient design: results are processed frame-by-frame in streaming
+mode. Only lightweight (id, frame, x, y) data is kept in memory and written
+to a CSV. The annotated video is saved by ultralytics automatically.
 """
 
 import argparse
-import pickle
+import csv
 from pathlib import Path
 
 from ultralytics import YOLO
@@ -14,71 +17,109 @@ from ultralytics import YOLO
 def run_tracking(
     source: str,
     output_dir: str = "results",
+    csv_path: str = "data/trajectories_yaounde.csv",
     model_size: str = "yolov8n.pt",
     conf: float = 0.3,
     iou: float = 0.5,
-    save_raw: bool = True,
-) -> list:
+    imgsz: int = 640,
+) -> Path:
     """
-    Run YOLOv8 + ByteTrack on a video source and return raw results.
+    Run YOLOv8 + ByteTrack on a video source.
+
+    Processes frames one-by-one in streaming mode to avoid OOM errors on
+    long FHD videos. Writes (id, frame, x, y) rows to a CSV in real time.
 
     Args:
-        source:     Path to video file (e.g. 'data/yaounde_video.mp4').
-        output_dir: Directory where annotated video is saved.
-        model_size: YOLO checkpoint (yolov8n/s/m/l/x).
+        source:     Path to video file (e.g. 'data/Record_1.mp4').
+        output_dir: Directory where the annotated video is saved.
+        csv_path:   Destination CSV for trajectory data.
+        model_size: YOLO checkpoint  (yolov8n / s / m / l / x).
         conf:       Detection confidence threshold.
         iou:        NMS IoU threshold.
-        save_raw:   Whether to pickle raw results for offline reuse.
+        imgsz:      Inference image size (pixels). 640 is the YOLO default;
+                    lower (e.g. 480) reduces VRAM/RAM usage further.
 
     Returns:
-        List of Ultralytics Results objects, one per frame.
+        Path to the written CSV file.
     """
     Path(output_dir).mkdir(parents=True, exist_ok=True)
+    Path(csv_path).parent.mkdir(parents=True, exist_ok=True)
 
     model = YOLO(model_size)  # downloads automatically on first run
 
-    results = model.track(
+    # stream=True is essential: yields one Result object at a time
+    # and discards it immediately after processing -> O(1) memory per frame.
+    results_gen = model.track(
         source=source,
-        classes=[0],                # class 0 = person
+        classes=[0],             # 0 = person
         tracker="bytetrack.yaml",
         conf=conf,
         iou=iou,
-        save=True,
+        imgsz=imgsz,
+        save=True,               # saves annotated video to output_dir
         project=output_dir,
         name="tracking_run",
         exist_ok=True,
         show=False,
-        stream=True,               # memory-efficient for long videos
+        stream=True,             # KEY: do NOT call list() on this
     )
 
-    # Materialise the generator so we can reuse the results list
-    results_list = list(results)
+    frame_idx = 0
+    total_detections = 0
 
-    if save_raw:
-        raw_path = Path(output_dir) / "raw_results.pkl"
-        with open(raw_path, "wb") as f:
-            pickle.dump(results_list, f)
-        print(f"[track] Raw results saved to {raw_path}")
+    with open(csv_path, "w", newline="", encoding="utf-8") as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(["id", "frame", "x", "y"])  # header
 
-    print(f"[track] Processed {len(results_list)} frames.")
-    return results_list
+        for result in results_gen:
+            if result.boxes is not None:
+                for box in result.boxes:
+                    if box.id is None:
+                        continue
+                    person_id = int(box.id)
+                    x1, y1, x2, y2 = box.xyxy[0].tolist()
+                    cx = (x1 + x2) / 2.0
+                    cy = (y1 + y2) / 2.0
+                    writer.writerow([person_id, frame_idx, round(cx, 2), round(cy, 2)])
+                    total_detections += 1
+
+            frame_idx += 1
+            if frame_idx % 300 == 0:   # progress every ~10 s at 30 fps
+                print(f"[track] Frame {frame_idx} | detections so far: {total_detections}")
+
+    print(f"[track] Done. {frame_idx} frames processed, {total_detections} detections.")
+    print(f"[track] Trajectories saved -> {csv_path}")
+    return Path(csv_path)
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Pedestrian tracking with YOLOv8 + ByteTrack")
-    parser.add_argument("source", help="Path to input video file")
-    parser.add_argument("--output-dir", default="results", help="Output directory (default: results/)")
-    parser.add_argument("--model", default="yolov8n.pt", help="YOLO checkpoint (default: yolov8n.pt)")
-    parser.add_argument("--conf", type=float, default=0.3, help="Detection confidence threshold")
-    parser.add_argument("--iou",  type=float, default=0.5, help="NMS IoU threshold")
+    parser = argparse.ArgumentParser(
+        description="Pedestrian tracking with YOLOv8 + ByteTrack (memory-efficient streaming)"
+    )
+    parser.add_argument("source",          help="Path to input video file")
+    parser.add_argument("--output-dir",    default="results",
+                        help="Directory for annotated video (default: results/)")
+    parser.add_argument("--csv",           default="data/trajectories_yaounde.csv",
+                        help="Output CSV path (default: data/trajectories_yaounde.csv)")
+    parser.add_argument("--model",         default="yolov8n.pt",
+                        help="YOLO checkpoint (default: yolov8n.pt)")
+    parser.add_argument("--conf",          type=float, default=0.3,
+                        help="Detection confidence threshold (default: 0.3)")
+    parser.add_argument("--iou",           type=float, default=0.5,
+                        help="NMS IoU threshold (default: 0.5)")
+    parser.add_argument("--imgsz",         type=int,   default=640,
+                        help="Inference image size in pixels (default: 640). "
+                             "Use 480 or 320 to reduce RAM usage further.")
     args = parser.parse_args()
 
     run_tracking(
         source=args.source,
         output_dir=args.output_dir,
+        csv_path=args.csv,
         model_size=args.model,
         conf=args.conf,
         iou=args.iou,
+        imgsz=args.imgsz,
     )
 
 
