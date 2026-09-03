@@ -111,17 +111,19 @@ pip install -r requirements.txt
 ### 2. Run tracking on your video
 
 ```bash
-# Record_1
-python src/track.py data/Record_1.mp4 --output-dir results
+# Record_1 (10 min) -- trajectories saved to CSV in real time, no OOM risk
+python src/track.py data/Record_1.mp4 --output-dir results --csv data/trajectories_yaounde.csv
 
-# Record_2
-python src/track.py data/Record_2.mp4 --output-dir results
+# Record_2 (5 min)
+python src/track.py data/Record_2.mp4 --output-dir results --csv data/trajectories_record2.csv
 ```
 
-### 3. Extract trajectories
+> **Low RAM?** Add `--imgsz 480` or `--imgsz 320` to reduce memory usage further.
+
+### 3. Add speed column to trajectories
 
 ```bash
-python src/extract_traj.py --raw-results results/raw_results.pkl --fps 30 --output data/trajectories_yaounde.csv
+python src/extract_traj.py --input data/trajectories_yaounde.csv --fps 30
 ```
 
 ### 4. Visualise
