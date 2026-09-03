@@ -184,5 +184,3 @@ Key hypotheses to test:
 
 ---
 
-*Video data collected at Carrefour Melen, Yaounde, Cameroon — Samsung Galaxy A56, 1920x1080 @ 30 FPS.*
-*Part of a research demonstration for the VITA lab (Prof. Alahi), EPFL.*
