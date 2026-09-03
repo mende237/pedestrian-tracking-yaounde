@@ -42,7 +42,7 @@ def extract_trajectories(results: list) -> pd.DataFrame:
     return df
 
 
-def compute_speeds(df: pd.DataFrame, fps: float = 25.0, px_per_m: float = 50.0) -> pd.DataFrame:
+def compute_speeds(df: pd.DataFrame, fps: float = 30.0, px_per_m: float = 50.0) -> pd.DataFrame:
     """
     Add a 'speed_mps' column (metres per second) to the trajectory DataFrame.
 
@@ -73,7 +73,7 @@ def main():
         "--output", default="data/trajectories_yaounde.csv",
         help="Output CSV path"
     )
-    parser.add_argument("--fps", type=float, default=25.0, help="Video frame rate")
+    parser.add_argument("--fps", type=float, default=30.0, help="Video frame rate (default: 30 for Samsung A56 FHD)")
     parser.add_argument("--px-per-m", type=float, default=50.0, help="Pixels per metre (for speed calc)")
     args = parser.parse_args()
 

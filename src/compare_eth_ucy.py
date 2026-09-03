@@ -157,8 +157,8 @@ def main():
                         help="Directory containing ETH/UCY .txt annotation files")
     parser.add_argument("--eth-fps",      type=float, default=2.5,
                         help="Frame rate used in ETH/UCY annotations (default: 2.5 for ETH)")
-    parser.add_argument("--yaounde-fps",  type=float, default=25.0,
-                        help="Frame rate of Yaounde video (default: 25.0)")
+    parser.add_argument("--yaounde-fps",  type=float, default=30.0,
+                        help="Frame rate of Yaounde video (default: 30.0 for Samsung A56 FHD)")
     parser.add_argument("--yaounde-px-per-m", type=float, default=50.0,
                         help="Pixels per metre for Yaounde video (for speed conversion)")
     parser.add_argument("--output-dir",   default="results",
