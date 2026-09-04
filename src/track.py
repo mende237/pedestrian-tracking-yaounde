@@ -52,7 +52,7 @@ def run_tracking(
         imgsz=imgsz,
         save=True,               # saves annotated video to abs_project/traking
         project=abs_project,
-        name="traking",
+        name="tracking",
         exist_ok=True,
         show=False,
         stream=True,             # KEY: do NOT call list() on this
