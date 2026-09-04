@@ -24,20 +24,20 @@ Pedestrian trajectory datasets from Low- and Middle-Income Countries (LMICs) are
 | **Camera** | Samsung Galaxy A56 |
 | **Resolution** | Full HD — 1920 × 1080 px |
 | **Frame rate** | 30 FPS |
-| **Total footage** | 5 videos |
+| **Total footage** | 6 videos (~35 min) |
 
 ### Video files
 
 | File | Duration | Vantage point | Description |
 |---|---|---|---|
-| `data/Record_1.mp4` | 10m01s | 🚶 Ground level | Recorded from street level at the intersection |
-| `data/Record_2.mp4` | 5m00s  | 🚶 Ground level | Recorded from street level at the intersection |
-| `data/Record_3.mp4` | 5m00s  | 🏢 3rd-floor balcony | Overhead view from a building balcony |
-| `data/Record_4.mp4` | 5m00s  | 🏢 3rd-floor balcony | Overhead view from a building balcony |
-| `data/Record_5.mp4` | 5m00s  | 🏢 3rd-floor balcony | Overhead view from a building balcony |
-| `data/Record_6.mp4` | 5m00s  | 🏢 3rd-floor balcony | Overhead view from a building balcony |
+| `data/Record_1.mp4`  | 10m01s | 🚶 Ground level      | Recorded from street level at the intersection |
+| `data/Record_2.mp4`  |  5m00s | 🚶 Ground level      | Recorded from street level at the intersection |
+| `data/Record 3.mp4`  |  5m00s | 🏢 3rd-floor balcony | Overhead view from a building balcony |
+| `data/Record 4.mp4`  |  5m00s | 🏢 3rd-floor balcony | Overhead view from a building balcony |
+| `data/Record 5.mp4`  |  5m00s | 🏢 3rd-floor balcony | Overhead view from a building balcony |
+| `data/Record 6.mp4`  |  5m00s | 🏢 3rd-floor balcony | Overhead view from a building balcony |
 
-> **Note:** Records 1 & 2 were collected from the ground, providing a street-level perspective. Records 3, 4, 5 & 6 were collected from the balcony of a 3-storey building, offering a near-top-down view well-suited for trajectory extraction.
+> **Note:** Records 1 & 2 were collected from the ground, providing a street-level perspective. Records 3–6 were collected from the balcony of a 3-storey building, offering a near-top-down view well-suited for trajectory extraction.
 > The 30 FPS rate provides sub-33 ms temporal resolution — sufficient for fine-grained speed estimation.
 
 ### Map
@@ -53,7 +53,7 @@ Pedestrian trajectory datasets from Low- and Middle-Income Countries (LMICs) are
 
 ## Results
 
-| Metric | Yaounde | ETH/UCY |
+| Metric | Yaounde (balcony) | ETH/UCY |
 |---|---|---|
 | Mean speed (m/s) | _TBD_ | ~1.0 |
 | Median linearity | _TBD_ | ~0.85 |
@@ -63,7 +63,7 @@ Pedestrian trajectory datasets from Low- and Middle-Income Countries (LMICs) are
 
 <!-- Uncomment when results are available:
 ![Tracking Demo](results/tracking_demo.gif)
-![Heatmap](results/heatmap.png)
+![Heatmap](results/heatmap_balcony.png)
 ![Speed Comparison](results/speed_comparison.png)
 -->
 
@@ -90,6 +90,7 @@ pedestrian-tracking-yaounde/
 ├── requirements.txt
 │
 ├── src/                          # Source code
+│   ├── run_all.py                # 🚀 Full pipeline orchestrator (all 6 recordings)
 │   ├── track.py                  # YOLOv8 + ByteTrack — detection & tracking
 │   ├── extract_traj.py           # Trajectory extraction to CSV + speed computation
 │   ├── visualize.py              # Heatmaps, trajectory overlays, speed plots
@@ -103,7 +104,10 @@ pedestrian-tracking-yaounde/
 │   ├── Record 4.mp4              #  5m00s │ 🏢 3rd-floor balcony
 │   ├── Record 5.mp4              #  5m00s │ 🏢 3rd-floor balcony
 │   ├── Record 6.mp4              #  5m00s │ 🏢 3rd-floor balcony
-│   ├── trajectories_yaounde.csv  # Generated trajectory output
+│   ├── trajectories/             # Per-recording & merged trajectory CSVs
+│   │   ├── record_1.csv … record_6.csv
+│   │   ├── all_ground.csv        # Records 1+2 merged
+│   │   └── all_balcony.csv       # Records 3–6 merged  ← used for analysis
 │   └── eth_ucy/                  # ETH/UCY benchmark annotations (.txt)
 │       ├── biwi_eth.txt
 │       ├── biwi_hotel.txt
@@ -115,12 +119,13 @@ pedestrian-tracking-yaounde/
 │       └── uni_examples.txt
 │
 ├── results/                      # Generated outputs
-│   ├── tracking_demo.gif         # Animated tracking preview
-│   ├── heatmap.png               # Pedestrian density heatmap
-│   ├── trajectories.png          # Trajectory overlay on frame
-│   ├── speed_distribution.png    # Speed histogram
-│   ├── speed_comparison.png      # Yaounde vs ETH/UCY comparison
-│   └── comparison_summary.csv    # Quantitative comparison table
+│   ├── tracking_demo.gif                 # Animated tracking preview
+│   ├── heatmap_balcony.png               # Pedestrian density heatmap (balcony)
+│   ├── trajectories_per_recording.png    # Trajectory grid (6 recordings)
+│   ├── speed_ground_vs_balcony.png       # Ground vs balcony speed comparison
+│   ├── speed_per_recording.png           # Per-recording speed vs ETH/UCY
+│   ├── speed_comparison.png              # Yaounde (balcony) vs ETH/UCY
+│   └── comparison_summary.csv           # Quantitative comparison table
 │
 └── notebooks/
     └── analysis.ipynb            # Interactive exploration & visualisation
@@ -136,42 +141,59 @@ pedestrian-tracking-yaounde/
 pip install -r requirements.txt
 ```
 
-### 2. Run tracking on your video
+### 2. Run the full pipeline (recommended)
+
+`run_all.py` handles tracking, speed extraction, and merging for all 6 recordings in one command:
 
 ```bash
-# Record_1 (10 min) -- trajectories saved to CSV in real time, no OOM risk
-python src/track.py data/Record_1.mp4 --output-dir results --csv data/trajectories_yaounde.csv
+# All recordings — ground + balcony
+python src/run_all.py
 
-# Record_2 (5 min)
-python src/track.py data/Record_2.mp4 --output-dir results --csv data/trajectories_record2.csv
+# Balcony only (recommended for trajectory analysis & ETH/UCY comparison)
+python src/run_all.py --groups balcony
+
+# Low RAM? Reduce inference size
+python src/run_all.py --groups balcony --imgsz 480
 ```
 
-> **Low RAM?** Add `--imgsz 480` or `--imgsz 320` to reduce memory usage further.
+This produces:
+- `data/trajectories/record_N.csv` — per-recording trajectories
+- `data/trajectories/all_ground.csv` — Records 1+2 merged
+- `data/trajectories/all_balcony.csv` — Records 3–6 merged
 
-### 3. Add speed column to trajectories
+### 3. (Optional) Run a single recording manually
 
 ```bash
-python src/extract_traj.py --input data/trajectories_yaounde.csv --fps 30
+python src/track.py "data/Record 3.mp4" \
+  --output-dir results/tracking/record_3 \
+  --csv data/trajectories/record_3.csv
+
+python src/extract_traj.py \
+  --input data/trajectories/record_3.csv \
+  --fps 30 --px-per-m 30
 ```
 
-### 4. Visualise
+### 4. Compare with ETH/UCY
 
 ```bash
-python src/visualize.py --csv data/trajectories_yaounde.csv --frame-w 1920 --frame-h 1080
+python src/compare_eth_ucy.py \
+  --yaounde-csv data/trajectories/all_balcony.csv \
+  --eth-dir data/eth_ucy \
+  --yaounde-fps 30
 ```
 
-### 5. Compare with ETH/UCY
-
-Download ETH/UCY annotations from [Trajectron++](https://github.com/StanfordASL/Trajectron-plus-plus/tree/master/experiments/pedestrians/raw/raw/all_data) and place `.txt` files in `data/eth_ucy/`, then:
+### 5. Visualise
 
 ```bash
-python src/compare_eth_ucy.py --yaounde-csv data/trajectories_yaounde.csv --eth-dir data/eth_ucy --yaounde-fps 30
+python src/visualize.py \
+  --csv data/trajectories/all_balcony.csv \
+  --frame-w 1920 --frame-h 1080
 ```
 
 ### 6. Generate demo GIF
 
 ```bash
-python src/make_gif.py results/tracking_run/Record_1.mp4 --output results/tracking_demo.gif
+python src/make_gif.py results/traking/Record_2.avi --output results/tracking_demo.gif
 ```
 
 ### 7. Interactive notebook
