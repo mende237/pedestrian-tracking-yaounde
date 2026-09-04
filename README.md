@@ -1,4 +1,4 @@
-﻿# Pedestrian Tracking & Trajectory Analysis — Carrefour Melen, Yaounde, Cameroon
+# Pedestrian Tracking & Trajectory Analysis — Carrefour Melen, Yaounde, Cameroon
 
 > **"Pedestrian Trajectory Extraction in Unstructured Urban Traffic: A Case Study from Yaounde, Cameroon"**
 
@@ -24,10 +24,20 @@ Pedestrian trajectory datasets from Low- and Middle-Income Countries (LMICs) are
 | **Camera** | Samsung Galaxy A56 |
 | **Resolution** | Full HD — 1920 × 1080 px |
 | **Frame rate** | 30 FPS |
-| **Files** | `data/Record_1.mp4` (10m01s, 1277 MB), `data/Record_2.mp4` (5m00s, 639 MB) |
-| **Total footage** | ~15 minutes |
+| **Total footage** | 5 videos |
 
-> Video was recorded handheld / from a fixed vantage point at the intersection.
+### Video files
+
+| File | Duration | Vantage point | Description |
+|---|---|---|---|
+| `data/Record_1.mp4` | 10m01s | 🚶 Ground level | Recorded from street level at the intersection |
+| `data/Record_2.mp4` | 5m00s  | 🚶 Ground level | Recorded from street level at the intersection |
+| `data/Record_3.mp4` | 5m00s  | 🏢 3rd-floor balcony | Overhead view from a building balcony |
+| `data/Record_4.mp4` | 5m00s  | 🏢 3rd-floor balcony | Overhead view from a building balcony |
+| `data/Record_5.mp4` | 5m00s  | 🏢 3rd-floor balcony | Overhead view from a building balcony |
+| `data/Record_6.mp4` | 5m00s  | 🏢 3rd-floor balcony | Overhead view from a building balcony |
+
+> **Note:** Records 1 & 2 were collected from the ground, providing a street-level perspective. Records 3, 4, 5 & 6 were collected from the balcony of a 3-storey building, offering a near-top-down view well-suited for trajectory extraction.
 > The 30 FPS rate provides sub-33 ms temporal resolution — sufficient for fine-grained speed estimation.
 
 ### Map
@@ -75,27 +85,45 @@ Pedestrian trajectory datasets from Low- and Middle-Income Countries (LMICs) are
 
 ```
 pedestrian-tracking-yaounde/
-+-- README.md
-+-- requirements.txt
-+-- src/
-|   +-- track.py            # YOLOv8 + ByteTrack detection & tracking
-|   +-- extract_traj.py     # Extract trajectories to CSV + compute speeds
-|   +-- visualize.py        # Heatmaps, trajectory overlays, speed plots
-|   +-- compare_eth_ucy.py  # Comparative analysis vs ETH/UCY
-|   +-- make_gif.py         # Convert tracking video to demo GIF
-+-- data/
-|   +-- Record_1.mp4                # Collected at Carrefour Melen (Samsung A56, FHD 30fps)
-|   +-- Record_2.mp4
-|   +-- trajectories_yaounde.csv    # Generated output
-|   +-- eth_ucy/                    # Place ETH/UCY .txt files here
-+-- results/
-|   +-- tracking_demo.gif
-|   +-- heatmap.png
-|   +-- trajectories.png
-|   +-- speed_distribution.png
-|   +-- speed_comparison.png
-+-- notebooks/
-    +-- analysis.ipynb      # Interactive exploration
+│
+├── README.md
+├── requirements.txt
+│
+├── src/                          # Source code
+│   ├── track.py                  # YOLOv8 + ByteTrack — detection & tracking
+│   ├── extract_traj.py           # Trajectory extraction to CSV + speed computation
+│   ├── visualize.py              # Heatmaps, trajectory overlays, speed plots
+│   ├── compare_eth_ucy.py        # Comparative analysis vs ETH/UCY benchmarks
+│   └── make_gif.py               # Convert tracking video to animated GIF
+│
+├── data/                         # Raw videos & annotations
+│   ├── Record_1.mp4              # 10m01s │ 🚶 Ground level
+│   ├── Record_2.mp4              #  5m00s │ 🚶 Ground level
+│   ├── Record 3.mp4              #  5m00s │ 🏢 3rd-floor balcony
+│   ├── Record 4.mp4              #  5m00s │ 🏢 3rd-floor balcony
+│   ├── Record 5.mp4              #  5m00s │ 🏢 3rd-floor balcony
+│   ├── Record 6.mp4              #  5m00s │ 🏢 3rd-floor balcony
+│   ├── trajectories_yaounde.csv  # Generated trajectory output
+│   └── eth_ucy/                  # ETH/UCY benchmark annotations (.txt)
+│       ├── biwi_eth.txt
+│       ├── biwi_hotel.txt
+│       ├── crowds_zara01.txt
+│       ├── crowds_zara02.txt
+│       ├── crowds_zara03.txt
+│       ├── students001.txt
+│       ├── students003.txt
+│       └── uni_examples.txt
+│
+├── results/                      # Generated outputs
+│   ├── tracking_demo.gif         # Animated tracking preview
+│   ├── heatmap.png               # Pedestrian density heatmap
+│   ├── trajectories.png          # Trajectory overlay on frame
+│   ├── speed_distribution.png    # Speed histogram
+│   ├── speed_comparison.png      # Yaounde vs ETH/UCY comparison
+│   └── comparison_summary.csv    # Quantitative comparison table
+│
+└── notebooks/
+    └── analysis.ipynb            # Interactive exploration & visualisation
 ```
 
 ---
