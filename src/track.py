@@ -1,12 +1,3 @@
-﻿"""
-track.py - Pedestrian Detection & Tracking
-Uses YOLOv8n with ByteTrack to detect and track pedestrians in a video.
-
-Memory-efficient design: results are processed frame-by-frame in streaming
-mode. Only lightweight (id, frame, x, y) data is kept in memory and written
-to a CSV. The annotated video is saved by ultralytics automatically.
-"""
-
 import argparse
 import csv
 from pathlib import Path
@@ -42,7 +33,10 @@ def run_tracking(
     Returns:
         Path to the written CSV file.
     """
-    Path(output_dir).mkdir(parents=True, exist_ok=True)
+    # Resolve to an absolute path so YOLO does NOT prepend its own
+    # global runs_dir (which would give runs/results/traking instead of results/traking).
+    abs_project = str(Path(output_dir).resolve())
+    Path(abs_project).mkdir(parents=True, exist_ok=True)
     Path(csv_path).parent.mkdir(parents=True, exist_ok=True)
 
     model = YOLO(model_size)  # downloads automatically on first run
@@ -56,9 +50,9 @@ def run_tracking(
         conf=conf,
         iou=iou,
         imgsz=imgsz,
-        save=True,               # saves annotated video to output_dir
-        project=output_dir,
-        name="tracking_run",
+        save=True,               # saves annotated video to abs_project/traking
+        project=abs_project,
+        name="traking",
         exist_ok=True,
         show=False,
         stream=True,             # KEY: do NOT call list() on this
