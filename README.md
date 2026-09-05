@@ -81,6 +81,21 @@ Pedestrian trajectory datasets from Low- and Middle-Income Countries (LMICs) are
 
 ---
 
+## Hardware
+
+Experiments were run on the following machine:
+
+| Component | Details |
+|---|---|
+| **Machine** | ASUS TUF Gaming A15 (FA506NCR) |
+| **OS** | Microsoft Windows 11 Professionnel (10.0.26200) |
+| **CPU** | AMD Ryzen 7 7435HS — 8 cores / 16 threads @ 3.1 GHz |
+| **RAM** | 16 GB DDR5 5600 MHz (2 × 8 GB Samsung) |
+| **GPU** | NVIDIA GeForce RTX 3050 Laptop GPU — 4 GB VRAM |
+| **Storage** | 512 GB NVMe SSD (Samsung MZVL8) + 1 TB NVMe SSD (Crucial P310) |
+
+---
+
 ## Project Structure
 
 ```
