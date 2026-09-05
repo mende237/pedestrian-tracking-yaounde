@@ -205,13 +205,20 @@ python src/visualize.py \
   --frame-w 1920 --frame-h 1080
 ```
 
-### 6. Generate demo GIF
+### 6. Analyze Pedestrian/Vehicle Interactions
+
+```bash
+python src/visualize_interactions.py --csv data/trajectories/all_balcony.csv
+```
+This generates `results/interactions_heatmap.png`, highlighting close-proximity conflicts (< 1.5m) between pedestrians and vehicles (cars/motorcycles), a frequent pattern in this LMIC dataset that is largely absent from ETH/UCY benchmarks.
+
+### 7. Generate demo GIF
 
 ```bash
 python src/make_gif.py results/traking/Record_2.avi --output results/tracking_demo.gif
 ```
 
-### 7. Interactive notebook
+### 8. Interactive notebook
 
 ```bash
 jupyter notebook notebooks/analysis.ipynb

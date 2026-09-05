@@ -1,4 +1,4 @@
-﻿"""
+"""
 compare_eth_ucy.py - Comparative Analysis: Yaounde vs ETH/UCY
 Loads the standard ETH/UCY annotation format (space-separated .txt files)
 and compares speed distributions, trajectory lengths, and path linearity
@@ -168,6 +168,10 @@ def main():
     # --- Load Yaounde ---
     print(f"[compare] Loading Yaounde trajectories from {args.yaounde_csv} ...")
     yaounde_df = pd.read_csv(args.yaounde_csv)
+
+    # Filter only pedestrians if the obj_class column exists
+    if "obj_class" in yaounde_df.columns:
+        yaounde_df = yaounde_df[yaounde_df["obj_class"] == 0]
 
     # Convert pixel positions to metres if speed_mps already computed
     if "speed_mps" not in yaounde_df.columns:

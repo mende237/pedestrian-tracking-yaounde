@@ -1,4 +1,4 @@
-﻿"""
+"""
 visualize.py - Trajectory Visualization
 Generates:
   - Heatmap of pedestrian density
@@ -110,6 +110,11 @@ def main():
     args = parser.parse_args()
 
     df = pd.read_csv(args.csv)
+    
+    # Filter only pedestrians if the obj_class column exists
+    if "obj_class" in df.columns:
+        df = df[df["obj_class"] == 0]
+
     out = args.output_dir
 
     plot_heatmap(df, args.frame_w, args.frame_h, output=f"{out}/heatmap.png")

@@ -45,7 +45,7 @@ def run_tracking(
     # and discards it immediately after processing -> O(1) memory per frame.
     results_gen = model.track(
         source=source,
-        classes=[0],             # 0 = person
+        classes=[0, 1, 2, 3, 5, 7],  # 0=person, 1=bicycle, 2=car, 3=motorcycle, 5=bus, 7=truck
         tracker="bytetrack.yaml",
         conf=conf,
         iou=iou,
@@ -63,18 +63,19 @@ def run_tracking(
 
     with open(csv_path, "w", newline="", encoding="utf-8") as csvfile:
         writer = csv.writer(csvfile)
-        writer.writerow(["id", "frame", "x", "y"])  # header
+        writer.writerow(["id", "frame", "x", "y", "obj_class"])  # header
 
         for result in results_gen:
             if result.boxes is not None:
                 for box in result.boxes:
                     if box.id is None:
                         continue
-                    person_id = int(box.id)
+                    obj_id = int(box.id)
+                    obj_class = int(box.cls[0].item())
                     x1, y1, x2, y2 = box.xyxy[0].tolist()
                     cx = (x1 + x2) / 2.0
                     cy = (y1 + y2) / 2.0
-                    writer.writerow([person_id, frame_idx, round(cx, 2), round(cy, 2)])
+                    writer.writerow([obj_id, frame_idx, round(cx, 2), round(cy, 2), obj_class])
                     total_detections += 1
 
             frame_idx += 1
