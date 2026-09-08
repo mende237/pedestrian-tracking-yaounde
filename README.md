@@ -226,7 +226,7 @@ python src/make_gif.py results/traking/Record_2.avi --output results/tracking_de
 ```bash
 jupyter notebook notebooks/analysis.ipynb
 ```
-*Note: The notebook now includes interactive visualisations of Pedestrian/Vehicle interactions (Option B).*
+*Note: The notebook now includes interactive visualisations of Pedestrian/Vehicle interactions.*
 
 ---
 
@@ -253,7 +253,7 @@ The trajectory analysis of the Yaoundé dataset reveals a complex, shared-space 
 
 * **Unusually High Speeds:** The speed distribution chart shows a median speed around 2.7 m/s, which is extremely fast for walking (normal walking speed is ~1.4 m/s). It also shows a "long tail" with recorded speeds reaching up to 20-30 m/s. 
 * **Interpretation:** The AI tracker is likely picking up motorcycles (which are ubiquitous in Yaoundé) and classifying them as pedestrians. 
-* **Ground vs. Balcony:** The comparison chart shows that the ground-level cameras (Records 1 & 2) record much higher maximum speeds than the balcony cameras. This indicates **perspective distortion**—objects closer to the ground camera appear to move much faster across the frame. The balcony cameras provide a much more reliable, top-down estimation of speed.
+* **Ground vs. Balcony:** The comparison chart shows that the ground-level cameras (Records 1 & 2) record much higher maximum speeds than the balcony cameras. This indicates **perspective distortion** objects closer to the ground camera appear to move much faster across the frame. The balcony cameras provide a much more reliable, top-down estimation of speed.
 
 ![Speed Per Recording](assets/images/speed_per_recording.png)
 
