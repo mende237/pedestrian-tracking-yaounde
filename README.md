@@ -271,6 +271,12 @@ The trajectory analysis of the Yaoundé dataset reveals a complex, shared-space 
 * **Path Linearity (0.808 vs 0.981):** Pedestrians in the Yaoundé dataset have a much lower linearity score compared to the standard European ETH/UCY dataset. They don't walk in straight lines; they constantly zig-zag to dodge motorcycles, cars, and other pedestrians, which aligns perfectly with the heavy overlap seen in the interactions heatmap.
 * **Path Length (1.5 vs 13.5):** The tracked trajectories are very short. This happens because the tracker frequently loses the pedestrian's ID due to **heavy occlusion** (people walking in dense crowds or vehicles blocking the camera's line of sight). 
 
+### 5. Trajectory Coverage Across Recordings
+![Trajectories per recording](assets/images/trajectories_per_recording.png)
+
+* **What it shows:** A raw overlay of the extracted pedestrian trajectories across all six video recordings. 
+* **Interpretation:** This grid highlights the spatial coverage and primary flow directions of the pedestrians. The overhead balcony views (Records 3-6) capture a wider, more uniform spread of trajectories and minimize occlusion. In contrast, the ground-level views (Records 1 & 2) show denser, highly overlapping paths heavily influenced by perspective distortion.
+
 **In Summary:**
 The graphics perfectly capture a complex, unstructured urban environment. They also highlight the technical challenges of running standard tracking algorithms in such environments (e.g., false positives with motorcycles, short tracks due to occlusion, and perspective issues from ground cameras).
 
