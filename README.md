@@ -242,15 +242,37 @@ Format: `frame_id  person_id  x  y` (space-separated, positions in metres).
 
 ---
 
-## Observations
+## Observations & Graphic Interpretation
 
-> *To be filled in after data collection and analysis.*
+The trajectory analysis of the Yaoundé dataset reveals a complex, shared-space traffic system. Below is a breakdown of the key findings from the visualisations.
 
-Key hypotheses to test:
-- Yaounde pedestrians move **faster** and more **erratically** than ETH/UCY counterparts.
-- Trajectory **linearity** is lower due to obstacle avoidance (motos, vendors, uneven surfaces).
-- **Local density** is higher at intersections but interaction models (Social Force, etc.) may not generalise.
-- The presence of **moto-taxis** (benskins) creates pedestrian-vehicle interactions absent from ETH/UCY.
+### 1. Speed Distribution & Camera Perspective
+![Speed Distribution](assets/images/speed_distribution.png)
+
+![Speed Ground vs Balcony](assets/images/speed_ground_vs_balcony.png)
+
+* **Unusually High Speeds:** The speed distribution chart shows a median speed around 2.7 m/s, which is extremely fast for walking (normal walking speed is ~1.4 m/s). It also shows a "long tail" with recorded speeds reaching up to 20-30 m/s. 
+* **Interpretation:** The AI tracker is likely picking up motorcycles (which are ubiquitous in Yaoundé) and classifying them as pedestrians. 
+* **Ground vs. Balcony:** The comparison chart shows that the ground-level cameras (Records 1 & 2) record much higher maximum speeds than the balcony cameras. This indicates **perspective distortion**—objects closer to the ground camera appear to move much faster across the frame. The balcony cameras provide a much more reliable, top-down estimation of speed.
+
+### 2. Pedestrian and Vehicle Interactions
+![Interactions Heatmap](assets/images/interactions_heatmap.png)
+
+* **What it shows:** Blue lines are pedestrians, red lines are vehicles, and the dense sea of yellow dots represents "conflict zones" where their paths intersect closely.
+* **Interpretation:** This graphic is a perfect illustration of a **"shared space" environment**. Unlike structured European datasets where pedestrians stay on sidewalks and cars stay on roads, this map shows heavy overlap. Pedestrians and vehicles are constantly weaving through the exact same spaces, particularly in the lower half of the frame, leading to an exceptionally high number of interactions and potential conflict points.
+
+### 3. Density and Waiting Zones
+![Heatmap Balcony](assets/images/heatmap_balcony.png)
+
+* **What it shows:** Bright yellow/white areas indicate where pedestrians spend the most time (high density). 
+* **Interpretation:** The heatmaps show very specific bright clusters (especially on the edges of the frame). These likely represent bottlenecks, waiting zones, or pickup/drop-off areas (like moto-taxi stands). People gather in these specific spots before making their way into the chaotic mixed-traffic flow.
+
+### 4. Behavior Comparison (Yaoundé vs. ETH/UCY)
+* **Path Linearity (0.808 vs 0.981):** Pedestrians in the Yaoundé dataset have a much lower linearity score compared to the standard European ETH/UCY dataset. They don't walk in straight lines; they constantly zig-zag to dodge motorcycles, cars, and other pedestrians, which aligns perfectly with the heavy overlap seen in the interactions heatmap.
+* **Path Length (1.5 vs 13.5):** The tracked trajectories are very short. This happens because the tracker frequently loses the pedestrian's ID due to **heavy occlusion** (people walking in dense crowds or vehicles blocking the camera's line of sight). 
+
+**In Summary:**
+The graphics perfectly capture a complex, unstructured urban environment. They also highlight the technical challenges of running standard tracking algorithms in such environments (e.g., false positives with motorcycles, short tracks due to occlusion, and perspective issues from ground cameras).
 
 ---
 
