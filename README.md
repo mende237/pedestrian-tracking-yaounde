@@ -65,6 +65,7 @@ Pedestrian trajectory datasets from Low- and Middle-Income Countries (LMICs) are
 ![Tracking Demo](results/tracking_demo.gif)
 ![Heatmap](results/heatmap_balcony.png)
 ![Speed Comparison](results/speed_comparison.png)
+![Interactions Heatmap](results/interactions_heatmap.png)
 -->
 
 ---
@@ -109,6 +110,7 @@ pedestrian-tracking-yaounde/
 │   ├── track.py                  # YOLOv8 + ByteTrack — detection & tracking
 │   ├── extract_traj.py           # Trajectory extraction to CSV + speed computation
 │   ├── visualize.py              # Heatmaps, trajectory overlays, speed plots
+│   ├── visualize_interactions.py # Highlights conflicts between pedestrians and vehicles
 │   ├── compare_eth_ucy.py        # Comparative analysis vs ETH/UCY benchmarks
 │   └── make_gif.py               # Convert tracking video to animated GIF
 │
@@ -140,6 +142,7 @@ pedestrian-tracking-yaounde/
 │   ├── speed_ground_vs_balcony.png       # Ground vs balcony speed comparison
 │   ├── speed_per_recording.png           # Per-recording speed vs ETH/UCY
 │   ├── speed_comparison.png              # Yaounde (balcony) vs ETH/UCY
+│   ├── interactions_heatmap.png          # Visualisation of conflict zones (< 60px)
 │   └── comparison_summary.csv           # Quantitative comparison table
 │
 └── notebooks/
@@ -223,6 +226,7 @@ python src/make_gif.py results/traking/Record_2.avi --output results/tracking_de
 ```bash
 jupyter notebook notebooks/analysis.ipynb
 ```
+*Note: The notebook now includes interactive visualisations of Pedestrian/Vehicle interactions (Option B).*
 
 ---
 
