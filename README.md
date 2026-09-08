@@ -51,22 +51,15 @@ Pedestrian trajectory datasets from Low- and Middle-Income Countries (LMICs) are
 
 ---
 
-## Results
+## Results (Comparison Summary)
 
-| Metric | Yaounde (balcony) | ETH/UCY |
+| Metric | Yaoundé (balcony) | ETH/UCY Benchmark |
 |---|---|---|
-| Mean speed (m/s) | _TBD_ | ~1.0 |
-| Median linearity | _TBD_ | ~0.85 |
-| Density (ped/m2) | _TBD_ | _TBD_ |
+| **Mean speed (m/s)** | 2.001 | 0.122 |
+| **Median path length** | 1.5 | 13.5 |
+| **Median linearity** | 0.808 | 0.981 |
 
-> Results will be updated once analysis is complete.
-
-<!-- Uncomment when results are available:
-![Tracking Demo](results/tracking_demo.gif)
-![Heatmap](results/heatmap_balcony.png)
-![Speed Comparison](results/speed_comparison.png)
-![Interactions Heatmap](results/interactions_heatmap.png)
--->
+> Note: The very high mean speed and low path length in the Yaoundé dataset highlight the prevalence of fast-moving motorcycles detected as pedestrians, as well as heavily fragmented trajectories due to occlusion.
 
 ---
 
