@@ -255,6 +255,11 @@ The trajectory analysis of the Yaoundé dataset reveals a complex, shared-space 
 * **Interpretation:** The AI tracker is likely picking up motorcycles (which are ubiquitous in Yaoundé) and classifying them as pedestrians. 
 * **Ground vs. Balcony:** The comparison chart shows that the ground-level cameras (Records 1 & 2) record much higher maximum speeds than the balcony cameras. This indicates **perspective distortion**—objects closer to the ground camera appear to move much faster across the frame. The balcony cameras provide a much more reliable, top-down estimation of speed.
 
+![Speed Per Recording](assets/images/speed_per_recording.png)
+
+* **Per-Recording vs ETH/UCY Benchmark:** The breakdown above compares each recording's speed distribution against the ETH/UCY benchmark (in gray). While ETH/UCY speeds are tightly clustered around 1.0–1.5 m/s, the Yaoundé data displays a much wider variance. Again, the ground-level recordings (Records 1 & 2) show the most extreme outliers compared to the balcony views.
+
+
 ### 2. Pedestrian and Vehicle Interactions
 ![Interactions Heatmap](assets/images/interactions_heatmap.png)
 
