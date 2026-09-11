@@ -28,6 +28,8 @@ Pedestrian trajectory datasets from Low- and Middle-Income Countries (LMICs) are
 
 ### Video files
 
+You can find the video records in this [Google Drive folder](https://drive.google.com/drive/folders/1bN4m7QJbjz6daWQs7DWsLPpgAtgGPwHQ?usp=drive_link).
+
 | File | Duration | Vantage point | Description |
 |---|---|---|---|
 | `data/Record_1.mp4`  | 10m01s | 🚶 Ground level      | Recorded from street level at the intersection |
