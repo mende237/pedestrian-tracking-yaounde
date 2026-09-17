@@ -101,7 +101,7 @@ pedestrian-tracking-yaounde/
 ├── requirements.txt
 │
 ├── src/                          # Source code
-│   ├── run_all.py                # 🚀 Full pipeline orchestrator (all 6 recordings)
+│   ├── run_all.py                # Full pipeline orchestrator (all 6 recordings)
 │   ├── track.py                  # YOLOv8 + ByteTrack — detection & tracking
 │   ├── extract_traj.py           # Trajectory extraction to CSV + speed computation
 │   ├── visualize.py              # Heatmaps, trajectory overlays, speed plots
