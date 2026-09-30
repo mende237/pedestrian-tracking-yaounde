@@ -4,6 +4,8 @@
 
 A computer-vision pipeline that **detects, tracks, and analyses pedestrian trajectories** from video footage filmed at **Carrefour Melen, Yaounde**, and compares the observed motion patterns against the ETH/UCY benchmark datasets used in state-of-the-art trajectory prediction research (Social Force, Social-Transmotion, etc.).
 
+![Overall Architecture](screenshot/overall_architecture.png)
+
 ---
 
 ## Motivation
